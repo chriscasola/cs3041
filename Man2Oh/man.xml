@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<manual>
+	<entry>
+		<title>Title 1</title>
+		<summary>Summary 1</summary>
+		<body>Body 1 goes here...</body>
+	</entry>
+	<entry>
+		<title>Title 2</title>
+		<summary>Summary 2</summary>
+		<body>Body 2 goes here...</body>
+	</entry>
+</manual>
+
