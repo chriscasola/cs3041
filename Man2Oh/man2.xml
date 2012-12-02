@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<manual>
+	<entry>
+		<title>atoi</title>
+		<topic>Level 1 help content for atoi here.</topic>
+		<summary>Level 2 help content for atoi here.</summary>
+		<detail>Level 3 help content for atoi here.</detail>
+	</entry>
+	<entry>
+		<title>fork</title>
+		<topic>Level 1 help content for fork here.</topic>
+		<summary>Level 2 help content for fork here.</summary>
+		<detail>Level 3 help content for fork here.</detail>
+	</entry>
+</manual>

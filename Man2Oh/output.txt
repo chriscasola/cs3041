@@ -1,71 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
+Table of Contents:
+atoi
+fork
+--------------------------------------------------------
 
-<manual>
-	<entry>
-		<title>atoi</title>
-		<summary>The atoi() function converts the initial portion of the string pointed to by str to int representation.</summary>
-		<body>
-ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
 
-NAME
-     atoi, atoi_l -- convert ASCII string to integer
+Summaries:
+Title: fork	Summary: Fork() causes creation of a new process.
+Title: atoi	Summary: The atoi() function converts the initial portion of the string pointed to by str to int representation.
+--------------------------------------------------------
 
-LIBRARY
-     Standard C Library (libc, -lc)
 
-SYNOPSIS
-     #include &lt;stdlib.h&gt;
+Entries:
 
-     int
-     atoi(const char *str);
-
-     #include &lt;xlocale.h&gt;
-
-     int
-     atoi_l(const char *str, locale_t loc);
-
-DESCRIPTION
-     The atoi() function converts the initial portion of the string pointed to
-     by str to int representation.
-
-     It is equivalent to:
-
-	   (int)strtol(str, (char **)NULL, 10);
-
-     While the atoi() function uses the current locale, the atoi_l() function
-     may be passed a locale directly. See xlocale(3) for more information.
-
-IMPLEMENTATION NOTES
-     The atoi() and atoi_l() functions are thread-safe and async-cancel-safe.
-
-     The atoi() and atoi_l() functions have been deprecated by strtol() and
-     strtol_l() and should not be used in new code.
-
-ERRORS
-     The function atoi() need not affect the value of errno on an error.
-
-SEE ALSO
-     atof(3), atol(3), strtod(3), strtol(3), strtoul(3), xlocale(3)
-
-STANDARDS
-     The atoi() function conforms to ISO/IEC 9945-1:1990 (``POSIX.1''),
-     ISO/IEC 9899:1990 (``ISO C90''), and ISO/IEC 9899:1999 (``ISO C99'').
-
-BSD				 June 4, 1993				   BSD
-			
-		</body>
-	</entry>
-	<entry>
-		<title>fork</title>
-		<summary>Fork() causes creation of a new process.</summary>
-		<body>
 FORK(2) 		    BSD System Calls Manual		       FORK(2)
 
 NAME
      fork -- create a new process
 
 SYNOPSIS
-     #include &lt;unistd.h&gt;
+     #include <unistd.h>
 
      pid_t
      fork(void);
@@ -106,23 +59,23 @@ ERRORS
 			cesses under execution would be exceeded.  This limit
 			is configuration-dependent.
 
-     [EAGAIN]		The system-imposed limit MAXUPRC (&lt;sys/param.h&gt;) on
+     [EAGAIN]		The system-imposed limit MAXUPRC (<sys/param.h>) on
 			the total number of processes under execution by a
 			single user would be exceeded.
 
      [ENOMEM]		There is insufficient swap space for the new process.
 
 LEGACY SYNOPSIS
-     #include &lt;sys/types.h&gt;
-     #include &lt;unistd.h&gt;
+     #include <sys/types.h>
+     #include <unistd.h>
 
-     The include file &lt;sys/types.h&gt; is necessary.
+     The include file <sys/types.h> is necessary.
 
 SEE ALSO
      execve(2), sigaction(2), wait(2), compat(5)
 
 HISTORY
-     A fork() function call appeared in Version 6 AT&amp;T UNIX.
+     A fork() function call appeared in Version 6 AT&T UNIX.
 
 CAVEATS
      There are limits to what you can do in the child process.	To be totally
@@ -135,7 +88,60 @@ CAVEATS
      yourself.
 
 4th Berkeley Distribution	 June 4, 1993	     4th Berkeley Distribution
-		</body>
-	</entry>
-</manual>
+		
+
+--------------------------------------------------------
+
+
+ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
+
+NAME
+     atoi, atoi_l -- convert ASCII string to integer
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include <stdlib.h>
+
+     int
+     atoi(const char *str);
+
+     #include <xlocale.h>
+
+     int
+     atoi_l(const char *str, locale_t loc);
+
+DESCRIPTION
+     The atoi() function converts the initial portion of the string pointed to
+     by str to int representation.
+
+     It is equivalent to:
+
+	   (int)strtol(str, (char **)NULL, 10);
+
+     While the atoi() function uses the current locale, the atoi_l() function
+     may be passed a locale directly. See xlocale(3) for more information.
+
+IMPLEMENTATION NOTES
+     The atoi() and atoi_l() functions are thread-safe and async-cancel-safe.
+
+     The atoi() and atoi_l() functions have been deprecated by strtol() and
+     strtol_l() and should not be used in new code.
+
+ERRORS
+     The function atoi() need not affect the value of errno on an error.
+
+SEE ALSO
+     atof(3), atol(3), strtod(3), strtol(3), strtoul(3), xlocale(3)
+
+STANDARDS
+     The atoi() function conforms to ISO/IEC 9945-1:1990 (``POSIX.1''),
+     ISO/IEC 9899:1990 (``ISO C90''), and ISO/IEC 9899:1999 (``ISO C99'').
+
+BSD				 June 4, 1993				   BSD
+			
+		
+
+--------------------------------------------------------
 

@@ -11,10 +11,25 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+/**
+ * Parses XML files designed to hold man page data
+ * 
+ * Reference: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+ */
 public class ManParser {
 	
+	/** Enum used to represent the level of help */
+	public enum HELP_LEVEL { 
+		TOPIC, SUMMARY, DETAIL
+	};
+	
+	/** The XML document */
 	protected Document xmlDom;
 
+	/**
+	 * Constructs a new ManParser for the given XML file
+	 * @param xmlFile the XML file
+	 */
 	public ManParser(File xmlFile) {
 		try {
 			this.xmlDom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
@@ -26,35 +41,74 @@ public class ManParser {
 		}
 	}
 	
-	public String getManEntry(String entryTitle) {
+	/**
+	 * Returns the manual entry corresponding to the given entry title
+	 * @param entryTitle the title of the entry to retrieve
+	 * @param helpLevel the level of help to retrieve
+	 * @return the manual entry corresponding to the given entry title
+	 */
+	public String getManEntry(String entryTitle, HELP_LEVEL helpLevel) throws UnknownEntryException {
 		String retVal = "";
 		NodeList entryNodes = xmlDom.getElementsByTagName("entry");
 		
+		// Iterate over entry nodes
 		for (int i = 0; i < entryNodes.getLength(); i++) {
+			// Ignore any garbage nodes (e.g. not entry nodes)
 			if (!(entryNodes.item(0).getNodeName().equals("entry"))) {
 				continue;
 			}
 			NodeList entryItems = entryNodes.item(i).getChildNodes();
-			String title = "", content = "";
+			String title = "", topic = "", summary = "", detail = "";
+			
+			//Iterate over children of entry nodes
 			for (int j = 0; j < entryItems.getLength(); j++) {
-				if (entryItems.item(j).getNodeName().equals("title")) {
+				String nodeName = entryItems.item(j).getNodeName();
+				if (nodeName.equals("title")) {
 					title = entryItems.item(j).getTextContent();
 				}
-				else if (entryItems.item(j).getNodeName().equals("body")) {
-					content = entryItems.item(j).getTextContent();
+				else if (nodeName.equals("topic")) {
+					topic = entryItems.item(j).getTextContent();
+				}
+				else if (nodeName.equals("summary")) {
+					summary = entryItems.item(j).getTextContent();
+				}
+				else if (nodeName.equals("detail")) {
+					detail = entryItems.item(j).getTextContent();
 				}
 			}
-			if (title.length() == 0 || content.length() == 0) {
-				throw new RuntimeException("Invalid XML file, all entry nodes must have title and summary child nodes!");
+			
+			// Make sure that all entry nodes have topic, summary, and detail elements
+			if (title.length() == 0 || topic.length() == 0 || summary.length() == 0 || detail.length() == 0) {
+				throw new RuntimeException("Invalid XML file, all entry nodes must have title, topic, summary, and detail child nodes!");
 			}
+			
+			// Return the content of the current node if it matches the given title
 			if (title.equals(entryTitle)) {
-				retVal = content;
+				switch (helpLevel) {
+				case DETAIL:
+					retVal = detail;
+					break;
+				case SUMMARY:
+					retVal = summary;
+					break;
+				case TOPIC:
+					retVal = topic;
+					break;
+				default:
+					break;
+				}
+				return retVal;
 			}
 		}
 		
-		return retVal;
+		// The manual entry was not found
+		throw new UnknownEntryException();
 	}
 	
+	/**
+	 * Returns a map with entry titles as the keys and entry summaries as the values
+	 * @return a map with entry titles as the keys and entry summaries as the values
+	 */
 	public Map<String, String> getEntryHeaders() {
 		HashMap<String, String> retVal = new HashMap<String, String>();
 		NodeList entryNodes = xmlDom.getElementsByTagName("entry");
@@ -81,6 +135,10 @@ public class ManParser {
 		return retVal;
 	}
 	
+	/**
+	 * Returns a list containing all of the entry titles
+	 * @return a list containing all of the entry titles
+	 */
 	public List<String> getEntryTitles() {
 		ArrayList<String> retVal = new ArrayList<String>();
 		NodeList entryTitleNodes = xmlDom.getElementsByTagName("title");
