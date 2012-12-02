@@ -1,4 +1,4 @@
-package ccasola.man2oh.xml;
+package ccasola.man2oh.model;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,12 +25,30 @@ public class ManParser {
 	
 	/** The XML document */
 	protected Document xmlDom;
+	
+	private static ManParser instance = null;
+	
+	public static ManParser getInstance() {
+		if (instance != null) {
+			return instance;
+		}
+		else {
+			throw new RuntimeException("The man parser must be given a file!");
+		}
+	}
+	
+	public static ManParser getInstance(File xmlFile) {
+		if (instance == null) {
+			instance = new ManParser(xmlFile);
+		}
+		return instance;
+	}
 
 	/**
 	 * Constructs a new ManParser for the given XML file
 	 * @param xmlFile the XML file
 	 */
-	public ManParser(File xmlFile) {
+	private ManParser(File xmlFile) {
 		try {
 			this.xmlDom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
 			this.xmlDom.normalize(); // remove empty text nodes
@@ -47,7 +65,7 @@ public class ManParser {
 	 * @param helpLevel the level of help to retrieve
 	 * @return the manual entry corresponding to the given entry title
 	 */
-	public String getManEntry(String entryTitle, HELP_LEVEL helpLevel) throws UnknownEntryException {
+	public String getEntry(String entryTitle, HELP_LEVEL helpLevel) throws UnknownEntryException {
 		String retVal = "";
 		NodeList entryNodes = xmlDom.getElementsByTagName("entry");
 		

@@ -1,4 +1,4 @@
-package ccasola.man2oh.xml;
+package ccasola.man2oh.model;
 
 /**
  * An exception to be thrown when an unknown manual entry is requested
