@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 /**
  * 
@@ -36,14 +37,16 @@ public class ToolbarPanel extends JPanel {
 		btnLookup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				manFrame.getTabPanel().addTab("New Tab", new ManPage(manFrame));
+				manFrame.getTabPanel().addTab("Lookup Item", new ManPage(manFrame));
+				((ManPage)manFrame.getTabPanel().getSelectedComponent()).getLookupField().requestFocus();
 			}
 		});
-		this.add(Box.createRigidArea(new Dimension(15, 0)));
+		this.add(Box.createRigidArea(new Dimension(14, 0)));
 		this.add(btnLookup);
 		
 		// Construct and configure the slider
 		helpLevelSlider = new HelpLevelSlider();
+		helpLevelSlider.addChangeListener(manFrame);
 		this.add(Box.createRigidArea(new Dimension(100, 0)));
 		this.add(new JLabel("Help Level:"));
 		this.add(Box.createRigidArea(new Dimension(15, 0)));
@@ -51,5 +54,13 @@ public class ToolbarPanel extends JPanel {
 		
 		// Reset the JPanel
 		this.validate();
+	}
+	
+	public JButton getLookupButton() {
+		return btnLookup;
+	}
+	
+	public JSlider getHelpLevelSlider() {
+		return helpLevelSlider;
 	}
 }

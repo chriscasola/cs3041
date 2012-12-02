@@ -23,20 +23,19 @@ public class TabComponent extends JPanel {
 	
 	final JTabbedPane parent;
 	
-	final String title;
-	
 	final JButton closeButton;
+	
+	final JLabel title;
 
 	public TabComponent(String tabTitle, JTabbedPane parentTabPanel) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		this.parent = parentTabPanel;
-		this.title = tabTitle;
+		this.title = new JLabel(tabTitle);
 		
 		// Label the tab
-		JLabel label = new JLabel(title);
-		label.setFont(label.getFont().deriveFont(14f));
-		label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-		this.add(label);
+		title.setFont(title.getFont().deriveFont(14f));
+		title.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+		this.add(title);
 		
 		// Add the close button
 		closeButton = new JButton("\u2716");
@@ -48,7 +47,8 @@ public class TabComponent extends JPanel {
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int index = parent.indexOfTab(title);
+				int index = parent.indexOfTab(title.getText());
+				index = (index > 0) ? index : 0;
 				parent.removeTabAt(index);
 			}
 		});
@@ -56,5 +56,11 @@ public class TabComponent extends JPanel {
 		
 		// Make the tab component transparent
 		this.setOpaque(false);
+	}
+	
+	public void setTitle(String newTitle) {
+		this.title.setText(newTitle);
+		this.validate();
+		this.repaint();
 	}
 }

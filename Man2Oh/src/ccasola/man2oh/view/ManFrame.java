@@ -4,12 +4,20 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ccasola.man2oh.model.ManParser;
 
+/**
+ * 
+ * References:
+ * 	- http://docs.oracle.com/javase/tutorial/uiswing/events/changelistener.html
+ */
 @SuppressWarnings("serial")
-public class ManFrame extends JFrame {
+public class ManFrame extends JFrame implements ChangeListener {
 	
 	ManParser model;
 	
@@ -42,20 +50,51 @@ public class ManFrame extends JFrame {
 		
 		// Setup the TabPanel
 		this.tabPanel = new TabPanel();
+		this.tabPanel.addChangeListener(this);
 		layout.putConstraint(SpringLayout.NORTH, tabPanel, 0, SpringLayout.SOUTH, toolbarPanel);
-		layout.putConstraint(SpringLayout.WEST, tabPanel, 0, SpringLayout.WEST, mainPanel);
-		layout.putConstraint(SpringLayout.EAST, tabPanel, 0, SpringLayout.EAST, mainPanel);
-		layout.putConstraint(SpringLayout.SOUTH, tabPanel, 0, SpringLayout.SOUTH, mainPanel);
+		layout.putConstraint(SpringLayout.WEST, tabPanel, 5, SpringLayout.WEST, mainPanel);
+		layout.putConstraint(SpringLayout.EAST, tabPanel, -5, SpringLayout.EAST, mainPanel);
+		layout.putConstraint(SpringLayout.SOUTH, tabPanel, -5, SpringLayout.SOUTH, mainPanel);
 		mainPanel.add(tabPanel);
 		
 		// Make the window visible
 		mainPanel.validate();
 		this.add(mainPanel);
 		this.pack();
+		this.toolbarPanel.getLookupButton().doClick();
 		this.setVisible(true);
 	}
 	
 	public TabPanel getTabPanel() {
 		return tabPanel;
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent ce) {
+		if (ce.getSource() instanceof JSlider) {
+			JSlider slider = (JSlider)ce.getSource();
+			if (!slider.getValueIsAdjusting()) {
+				ISliderUpdated currentManPage = (ISliderUpdated)tabPanel.getSelectedComponent();
+				currentManPage.sliderChanged(slider);
+			}
+		}
+		else if (ce.getSource() instanceof TabPanel) {
+			TabPanel tabPanel = (TabPanel)ce.getSource();
+			if (tabPanel.getTabCount() > 0) {
+				switch(((ManPage)tabPanel.getSelectedComponent()).getHelpLevel()) {
+				case DETAIL:
+					toolbarPanel.getHelpLevelSlider().setValue(3);
+					break;
+				case SUMMARY:
+					toolbarPanel.getHelpLevelSlider().setValue(2);
+					break;
+				case TOPIC:
+					toolbarPanel.getHelpLevelSlider().setValue(1);
+					break;
+				default:
+					break;
+				}
+			}
+		}
 	}
 }
