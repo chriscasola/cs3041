@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<manual>
+	<entry>
+		<title>atoi</title>
+		<topic>
+			ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
+
+NAME
+     atoi, atoi_l -- convert ASCII string to integer
+
+LIBRARY
+     Standard C Library (libc, -lc)
+		</topic>
+		<summary>
+			ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
+
+NAME
+     atoi, atoi_l -- convert ASCII string to integer
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include &lt;stdlib.h&gt;
+
+     int
+     atoi(const char *str);
+
+     #include &lt;xlocale.h&gt;
+
+     int
+     atoi_l(const char *str, locale_t loc);
+
+DESCRIPTION
+     The atoi() function converts the initial portion of the string pointed to
+     by str to int representation.
+
+     It is equivalent to:
+
+	   (int)strtol(str, (char **)NULL, 10);
+
+     While the atoi() function uses the current locale, the atoi_l() function
+     may be passed a locale directly. See xlocale(3) for more information.
+			
+		</summary>
+		<detail>
+			
+ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
+
+NAME
+     atoi, atoi_l -- convert ASCII string to integer
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include &lt;stdlib.h&gt;
+
+     int
+     atoi(const char *str);
+
+     #include &lt;xlocale.h&gt;
+
+     int
+     atoi_l(const char *str, locale_t loc);
+
+DESCRIPTION
+     The atoi() function converts the initial portion of the string pointed to
+     by str to int representation.
+
+     It is equivalent to:
+
+	   (int)strtol(str, (char **)NULL, 10);
+
+     While the atoi() function uses the current locale, the atoi_l() function
+     may be passed a locale directly. See xlocale(3) for more information.
+
+IMPLEMENTATION NOTES
+     The atoi() and atoi_l() functions are thread-safe and async-cancel-safe.
+
+     The atoi() and atoi_l() functions have been deprecated by strtol() and
+     strtol_l() and should not be used in new code.
+
+ERRORS
+     The function atoi() need not affect the value of errno on an error.
+
+SEE ALSO
+     atof(3), atol(3), strtod(3), strtol(3), strtoul(3), xlocale(3)
+
+STANDARDS
+     The atoi() function conforms to ISO/IEC 9945-1:1990 (``POSIX.1''),
+     ISO/IEC 9899:1990 (``ISO C90''), and ISO/IEC 9899:1999 (``ISO C99'').
+
+BSD				 June 4, 1993				   BSD
+		</detail>
+	</entry>
+	<entry>
+		<title>fork</title>
+		<topic>Level 1 help content for fork here.</topic>
+		<summary>Level 2 help content for fork here.</summary>
+		<detail>Level 3 help content for fork here.</detail>
+	</entry>
+</manual>
