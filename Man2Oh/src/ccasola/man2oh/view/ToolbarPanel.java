@@ -1,3 +1,8 @@
+/*
+ * References:
+ *	- http://stackoverflow.com/questions/2174319/is-it-possible-to-have-a-java-swing-border-only-on-the-top-side
+ */
+
 package ccasola.man2oh.view;
 
 import java.awt.Color;
@@ -14,17 +19,24 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 
 /**
- * 
- * References:
- * 	- http://stackoverflow.com/questions/2174319/is-it-possible-to-have-a-java-swing-border-only-on-the-top-side
+ * A panel that contains the main toolbar, including the help level slider and the lookup button
  */
 @SuppressWarnings("serial")
 public class ToolbarPanel extends JPanel {
 	
+	/** The lookup button */
 	protected JButton btnLookup;
+	
+	/** The help level slider */
 	protected HelpLevelSlider helpLevelSlider;
+	
+	/** The main application window */
 	protected final ManFrame manFrame;
 
+	/**
+	 * Constructs a ToolbarPanel
+	 * @param parent the parent application window
+	 */
 	public ToolbarPanel(ManFrame parent) {
 		this.manFrame = parent;
 		
@@ -41,10 +53,12 @@ public class ToolbarPanel extends JPanel {
 				((ManPage)manFrame.getTabPanel().getSelectedComponent()).getLookupField().requestFocus();
 			}
 		});
+		
+		// Add the lookup button to this panel
 		this.add(Box.createRigidArea(new Dimension(14, 0)));
 		this.add(btnLookup);
 		
-		// Construct and configure the slider
+		// Construct and configure the slider and add it to this panel
 		helpLevelSlider = new HelpLevelSlider();
 		helpLevelSlider.addChangeListener(manFrame);
 		this.add(Box.createRigidArea(new Dimension(100, 0)));
@@ -52,14 +66,22 @@ public class ToolbarPanel extends JPanel {
 		this.add(Box.createRigidArea(new Dimension(15, 0)));
 		this.add(helpLevelSlider);
 		
-		// Reset the JPanel
+		// Refresh the layout of the panel
 		this.validate();
 	}
 	
+	/**
+	 * Returns the lookup button
+	 * @return the lookup button
+	 */
 	public JButton getLookupButton() {
 		return btnLookup;
 	}
 	
+	/**
+	 * Returns the help level slider
+	 * @return the help level slider
+	 */
 	public JSlider getHelpLevelSlider() {
 		return helpLevelSlider;
 	}

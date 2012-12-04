@@ -5,14 +5,21 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
+/**
+ * The tab pane that displays multiple {@link ManPage} panels.
+ */
 @SuppressWarnings("serial")
-public class TabPanel extends JTabbedPane {
+public class TabPane extends JTabbedPane {
 
-	public TabPanel() {
+	/**
+	 * Constructs a new TabPane
+	 */
+	public TabPane() {
 		super();
 		this.setTabPlacement(TOP);
 	}
 	
+	@Override
 	public void addTab(String title, Component component) {
 		insertTab(title, null, component, null, this.getTabCount());
 		this.setSelectedIndex(this.getTabCount() - 1);

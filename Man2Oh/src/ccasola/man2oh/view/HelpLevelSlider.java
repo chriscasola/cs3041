@@ -1,3 +1,8 @@
+/*
+ * References:
+ * 	- http://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+ */
+
 package ccasola.man2oh.view;
 
 import java.awt.Dimension;
@@ -7,12 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 
 /**
- * 
- * Reference: http://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+ * A slider to choose among three help levels
  */
 @SuppressWarnings("serial")
 public class HelpLevelSlider extends JSlider {
 
+	/**
+	 * Construct the slider and setup the tick marks and labels
+	 */
 	public HelpLevelSlider() {
 		super(JSlider.HORIZONTAL, 1, 3, 1);
 		
