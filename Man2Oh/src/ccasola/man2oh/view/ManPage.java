@@ -150,10 +150,7 @@ public class ManPage extends JPanel implements ActionListener, ISliderUpdated {
 			this.validate();
 			this.repaint();
 		} catch (UnknownEntryException e) {
-			// if this exception is thrown something bad happened,
-			// since we already know this man item exists
-			System.err.println("A fatal error occurred when switching the help level.");
-			System.exit(1);
+			// do nothing, this may happen during normal operation
 		}
 	}
 	
