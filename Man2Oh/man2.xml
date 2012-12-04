@@ -4,7 +4,7 @@
 	<entry>
 		<title>atoi</title>
 		<topic>
-			ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
+ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
 
 NAME
      atoi, atoi_l -- convert ASCII string to integer
@@ -13,7 +13,7 @@ LIBRARY
      Standard C Library (libc, -lc)
 		</topic>
 		<summary>
-			ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
+ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
 
 NAME
      atoi, atoi_l -- convert ASCII string to integer
@@ -44,8 +44,7 @@ DESCRIPTION
      may be passed a locale directly. See xlocale(3) for more information.
 			
 		</summary>
-		<detail>
-			
+		<detail>	
 ATOI(3) 		 BSD Library Functions Manual		       ATOI(3)
 
 NAME

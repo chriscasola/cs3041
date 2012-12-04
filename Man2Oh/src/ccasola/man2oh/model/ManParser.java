@@ -1,3 +1,8 @@
+/*
+ * References:
+ * 	- http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+ */
+
 package ccasola.man2oh.model;
 
 import java.io.File;
@@ -13,8 +18,6 @@ import org.w3c.dom.NodeList;
 
 /**
  * Parses XML files designed to hold man page data
- * 
- * Reference: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
  */
 public class ManParser {
 	
@@ -26,8 +29,13 @@ public class ManParser {
 	/** The XML document */
 	protected Document xmlDom;
 	
+	/** The singleton instance of ManParser */
 	private static ManParser instance = null;
 	
+	/**
+	 * Returns the singleton instance of ManParser
+	 * @return the singleton instance of ManParser
+	 */
 	public static ManParser getInstance() {
 		if (instance != null) {
 			return instance;
@@ -37,6 +45,11 @@ public class ManParser {
 		}
 	}
 	
+	/**
+	 * Returns the singleton instance of ManParser after initializing it with the given XML file
+	 * @param xmlFile the XML file to parse
+	 * @return the singleton instance of ManParser
+	 */
 	public static ManParser getInstance(File xmlFile) {
 		if (instance == null) {
 			instance = new ManParser(xmlFile);

@@ -1,27 +1,41 @@
+/*
+ * References:
+ *	- http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+ * 	- http://stackoverflow.com/questions/307024/native-swing-menu-bar-support-for-macos-x-in-java
+ */
+
 package ccasola.man2oh;
 
 import java.io.File;
-import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import ccasola.man2oh.model.ManParser;
-import ccasola.man2oh.model.UnknownEntryException;
-import ccasola.man2oh.model.ManParser.HELP_LEVEL;
 import ccasola.man2oh.view.ManFrame;
 
 
 /**
  * The main class for this help system
+ * 
+ * CS 3041 - Project 4
+ * 12/04/2012
+ * 
  * @author Chris Casola
- *
  */
 public class Launcher {
 
+	/**
+	 * The main method that opens the XML file and launches the GUI
+	 * @param args command line arguments (none are used)
+	 */
 	public static void main(String[] args) {
 		
+		// Set application name (for OS X only)
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Man2Oh");
+		
+		// Load the XML file containing help data
 		final File manFile = new File("./man2.xml");
 		ManParser.getInstance(manFile);
 		
@@ -33,35 +47,29 @@ public class Launcher {
 		            break;
 		        }
 		    }
-		} catch (Exception e) {
-		    // If Nimbus is not available, use the default look and feel
+			
+		} catch (Exception e1) {
+			// could not use the Nimbus look and feel
 		}
 		
+		// If Nimbus is not used, try to use the cross platform look and feel
+		if (UIManager.getLookAndFeel().getName() != "Nimbus") {
+			try { // try to use the cross platform look and feel
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			}
+			catch (Exception e) {
+				// could not use cross platform look and feel so use the system one, but warn the user
+				System.out.println("Error: Falling back to the system default look and feel. The GUI may not display as intended!");
+			}
+		}
+
 		// Start the GUI
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				ManFrame manFrame = new ManFrame();				
+				new ManFrame();				
 			}
 		});
-		
-		/*
-		List<String> entryTitles = manParser.getEntryTitles();
-		
-		System.out.println("Table of Contents:");
-		for (String entry : entryTitles) {
-			System.out.println(entry);
-		}
-		System.out.println("--------------------------------------------------------\n\n");
-		
-		System.out.println("Fork summary help:");
-		try {
-			System.out.println(manParser.getEntry("fork", HELP_LEVEL.SUMMARY));
-		} catch (UnknownEntryException e) {
-			System.out.println("Couldn't find man entry");
-		}
-		System.out.println("--------------------------------------------------------\n\n");
-		*/
 	}
 
 }

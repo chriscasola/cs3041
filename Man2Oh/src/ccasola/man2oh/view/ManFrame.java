@@ -1,6 +1,12 @@
+/*
+ * References:
+ * 	- http://docs.oracle.com/javase/tutorial/uiswing/events/changelistener.html
+ */
+
 package ccasola.man2oh.view;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,28 +18,38 @@ import javax.swing.event.ChangeListener;
 import ccasola.man2oh.model.ManParser;
 
 /**
- * 
- * References:
- * 	- http://docs.oracle.com/javase/tutorial/uiswing/events/changelistener.html
+ * The main window for the application
  */
 @SuppressWarnings("serial")
 public class ManFrame extends JFrame implements ChangeListener {
 	
+	/** The model, contains the help data, parsed on demand from the XML file */
 	ManParser model;
 	
+	/** The main panel containing all GUI elements */
 	JPanel mainPanel;
 	
+	/** The toolbar panel containing the lookup button and help level slider */
 	ToolbarPanel toolbarPanel;
 	
-	TabPanel tabPanel;
+	/** The panel containing the tab panel for viewing help documents */
+	TabPane tabPanel;
 
+	/**
+	 * Constructs a new main window
+	 */
 	public ManFrame() {
 		
 		// Configure the window
-		this.setBounds(150, 150, 800, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(800, 600));
 		this.setTitle("Man2Oh Help Viewer");
+		
+		// Position the window in the center of the screen
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		int xPos = (dim.width - 800) / 2;
+		int yPos = (int)((dim.height - 600) / 2 * .75);
+		this.setBounds(xPos, yPos, 800, 600);
 		
 		// Construct the panel to be displayed in this frame
 		mainPanel = new JPanel();
@@ -49,7 +65,7 @@ public class ManFrame extends JFrame implements ChangeListener {
 		mainPanel.add(toolbarPanel);
 		
 		// Setup the TabPanel
-		this.tabPanel = new TabPanel();
+		this.tabPanel = new TabPane();
 		this.tabPanel.addChangeListener(this);
 		layout.putConstraint(SpringLayout.NORTH, tabPanel, 0, SpringLayout.SOUTH, toolbarPanel);
 		layout.putConstraint(SpringLayout.WEST, tabPanel, 5, SpringLayout.WEST, mainPanel);
@@ -65,21 +81,29 @@ public class ManFrame extends JFrame implements ChangeListener {
 		this.setVisible(true);
 	}
 	
-	public TabPanel getTabPanel() {
+	/**
+	 * Returns the tab panel
+	 * @return the tab panel
+	 */
+	public TabPane getTabPanel() {
 		return tabPanel;
 	}
 
+	/**
+	 * Method required by ChangeListener interface.
+	 * This method is called when the tab panel or slider change
+	 */
 	@Override
 	public void stateChanged(ChangeEvent ce) {
-		if (ce.getSource() instanceof JSlider) {
+		if (ce.getSource() instanceof JSlider) { // the slider changed, so notify the currently displayed ManPage
 			JSlider slider = (JSlider)ce.getSource();
 			if (!slider.getValueIsAdjusting()) {
 				ISliderUpdated currentManPage = (ISliderUpdated)tabPanel.getSelectedComponent();
 				currentManPage.sliderChanged(slider);
 			}
 		}
-		else if (ce.getSource() instanceof TabPanel) {
-			TabPanel tabPanel = (TabPanel)ce.getSource();
+		else if (ce.getSource() instanceof TabPane) { // the active tab changed, so update the state of the slider
+			TabPane tabPanel = (TabPane)ce.getSource();
 			if (tabPanel.getTabCount() > 0) {
 				switch(((ManPage)tabPanel.getSelectedComponent()).getHelpLevel()) {
 				case DETAIL:
