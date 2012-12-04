@@ -39,6 +39,9 @@ public class Launcher {
 		final File manFile = new File("./man2.xml");
 		ManParser.getInstance(manFile);
 		
+		// Print the list of entries to the command line
+		System.out.println(ManParser.getInstance().getEntryTitles());
+		
 		// Set the look and feel
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
